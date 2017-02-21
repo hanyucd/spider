@@ -85,40 +85,43 @@ if __name__ == '__main__':
     for i in range(1, 11):
         qq_read.details(i)
 
-        # 正在爬取的网页URL地址: http://dushu.qq.com/store/index/sortkey/1/ps/30/p/1
-        # 本页面共需爬取 30 个URL.
-        # {
-        #     "spider_url": "http://dushu.qq.com/intro.html?bid=310949",
-        #     "data": {
-        #         "popularity": "3003",
-        #         "grade": "3.6",
-        #         "price": "VIP免费",
-        #         "word_number": "25万字",
-        #         "title": "贾宝玉林黛玉别传",
-        #         "author": "郭洛仁",
-        #         "publish": "中国科学文化音像出版社限公司",
-        #         "collect": "3003",
-        #         "praise": "0",
-        #         "recommend": "31",
-        #         "type": "中国古典小说"
-        #     },
-        #     "current_page_length": 30
-        # }
-        # {
-        #     "spider_url": "http://dushu.qq.com/intro.html?bid=320438",
-        #     "data": {
-        #         "popularity": "52255",
-        #         "grade": "4.2",
-        #         "price": "5.99元",
-        #         "word_number": "19万字",
-        #         "title": "后宫如懿传3",
-        #         "author": "流潋紫",
-        #         "publish": "中国华侨出版社",
-        #         "collect": "52255",
-        #         "praise": "6",
-        #         "recommend": "674",
-        #         "type": "情感"
-        #     },
-        #     "current_page_length": 30
-        # }
-        # ......
+  """
+  输出结果：
+            正在爬取的网页URL地址: http://dushu.qq.com/store/index/sortkey/1/ps/30/p/1
+            本页面共需爬取 30 个URL.
+            {
+                "spider_url": "http://dushu.qq.com/intro.html?bid=310949",
+                "data": {
+                    "popularity": "3003",
+                    "grade": "3.6",
+                    "price": "VIP免费",
+                    "word_number": "25万字",
+                    "title": "贾宝玉林黛玉别传",
+                    "author": "郭洛仁",
+                    "publish": "中国科学文化音像出版社限公司",
+                    "collect": "3003",
+                    "praise": "0",
+                    "recommend": "31",
+                    "type": "中国古典小说"
+                },
+                "current_page_length": 30
+            }
+            {
+                "spider_url": "http://dushu.qq.com/intro.html?bid=320438",
+                "data": {
+                    "popularity": "52255",
+                    "grade": "4.2",
+                    "price": "5.99元",
+                    "word_number": "19万字",
+                    "title": "后宫如懿传3",
+                    "author": "流潋紫",
+                    "publish": "中国华侨出版社",
+                    "collect": "52255",
+                    "praise": "6",
+                    "recommend": "674",
+                    "type": "情感"
+                },
+                "current_page_length": 30
+            }
+            ......
+  """
