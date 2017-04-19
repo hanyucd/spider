@@ -85,7 +85,8 @@ if __name__ == '__main__':
     for i in range(1, 11):
         qq_read.details(i)
 
-  """
+
+"""
   输出结果：
             正在爬取的网页URL地址: http://dushu.qq.com/store/index/sortkey/1/ps/30/p/1
             本页面共需爬取 30 个URL.
