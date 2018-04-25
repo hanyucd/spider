@@ -49,7 +49,7 @@ https.get(option, function(res) {
 
 // 保存数据到本地
 function saveData(path, movies) {
-  // 异步地写入数据到文件            | JSON.stringify 参数 4, 表示为锁金 4 个空格
+  // 异步地写入数据到文件            | JSON.stringify 参数 4, 表示缩进 4 个空格
   fs.writeFile(path, JSON.stringify(movies, null, 4), function(error) {
     if (error) {
       return console.log(error);
