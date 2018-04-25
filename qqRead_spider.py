@@ -4,106 +4,106 @@ import json
 from bs4 import BeautifulSoup
 import sys
 reload(sys)
-sys.setdefaultencoding('utf8')
+sys.setdefaultencoding('utf8') 
 
 """
-QQÔÄ¶ÁÅÀ³æ£¬ÅÀÈ¡Ã¿¸öÍøÒ³Ã¿±¾Ğ¡ËµµÄÏêÇé
+QQé˜…è¯»çˆ¬è™«ï¼Œçˆ¬å–æ¯ä¸ªç½‘é¡µæ¯æœ¬å°è¯´çš„è¯¦æƒ…
 start_URL = http://dushu.qq.com/store/index/sortkey/1/ps/30/p/1
 
 """
 class QqRead:
-    # ³õÊ¼»¯£¬ ´«Èë»ùµØÖ· ºÍ ²ÎÊı
+    # åˆå§‹åŒ–ï¼Œ ä¼ å…¥åŸºåœ°å€ å’Œ å‚æ•°
     def __init__(self, base_url):
         self.base_url = base_url
 
-    ''' ´«ÈëÒ³Âë£¬ »ñÈ¡¸ÃÒ³ĞèÅÀÈ¡µÄURL '''
+    ''' ä¼ å…¥é¡µç ï¼Œ è·å–è¯¥é¡µéœ€çˆ¬å–çš„URL '''
     def getPage(self, pageNum):
-        # Ã¿¸öÒ³ÃæÍêÕûURL
+        # æ¯ä¸ªé¡µé¢å®Œæ•´URL
         spider_url = self.base_url + str(pageNum)
-        print 'ÕıÔÚÅÀÈ¡µÄÍøÒ³URLµØÖ·:', spider_url
-        # »ñÈ¡ÍøÒ³
+        print 'æ­£åœ¨çˆ¬å–çš„ç½‘é¡µURLåœ°å€:', spider_url
+        # è·å–ç½‘é¡µ
         request = requests.get(spider_url)
-        # »ñÈ¡ÍøÒ³ÄÚÈİ¸³ÓÚ±äÁ¿
+        # è·å–ç½‘é¡µå†…å®¹èµ‹äºå˜é‡
         html = request.text
-        # »ñÈ¡ BeautifulSoup¶ÔÏó
+        # è·å– BeautifulSoupå¯¹è±¡
         soup = BeautifulSoup(html, 'html.parser')
-        # ´æ´¢Ã¿Ò³ÖĞĞèÒªÅÀÈ¡µÄÁ´½Ó£¬³õÊ¼»¯¿ÕÁĞ±í
+        # å­˜å‚¨æ¯é¡µä¸­éœ€è¦çˆ¬å–çš„é“¾æ¥ï¼Œåˆå§‹åŒ–ç©ºåˆ—è¡¨
         links = []
-        # cssÑ¡ÔñÆ÷£¬Í¨¹ı×éºÏ²éÕÒ
+        # cssé€‰æ‹©å™¨ï¼Œé€šè¿‡ç»„åˆæŸ¥æ‰¾
         for link in soup.select('div .bookImgBox'):
-            # »ñµÃÒ³Ãæ Ã¿±¾Ğ¡ËµURL
+            # è·å¾—é¡µé¢ æ¯æœ¬å°è¯´URL
              only_url = link.a.get('href')
              links.append(only_url)
         length = len(links)
-        print '±¾Ò³Ãæ¹²ĞèÅÀÈ¡', length, '¸öURL.'
-        # ·µ»ØÔª×é
+        print 'æœ¬é¡µé¢å…±éœ€çˆ¬å–', length, 'ä¸ªURL.'
+        # è¿”å›å…ƒç»„
         return links, length
 
-    ''' ÄÃµ½ page ĞèÅÀÈ¡µÄURL; ±éÀú½øÈëÃ¿±¾Ğ¡ËµµÄÏêÇé page '''
+    ''' æ‹¿åˆ° page éœ€çˆ¬å–çš„URL; éå†è¿›å…¥æ¯æœ¬å°è¯´çš„è¯¦æƒ… page '''
     def details(self, pageNum):
         page_links, length = self.getPage(pageNum)
         for link in page_links:
-            # Ğ¡ËµÏêÇé ´æÈë×Öµä
+            # å°è¯´è¯¦æƒ… å­˜å…¥å­—å…¸
             datas = {}
-            # »ñÈ¡ÍøÒ³
+            # è·å–ç½‘é¡µ
             request = requests.get(link)
-            # »ñÈ¡ÍøÒ³ÄÚÈİ¸³ÖµÓÚ±äÁ¿
+            # è·å–ç½‘é¡µå†…å®¹èµ‹å€¼äºå˜é‡
             html = request.text
-            # ´´½¨ BeautifulSoup¶ÔÏó
+            # åˆ›å»º BeautifulSoupå¯¹è±¡
             soup = BeautifulSoup(html, 'html.parser')
-            # cssÑ¡ÔñÆ÷£¬Í¨¹ı×éºÏ²éÕÒ; Ñ¡³öÒªÅÀÈ¡µÄÇøÓò | ·µ»Ø list
+            # cssé€‰æ‹©å™¨ï¼Œé€šè¿‡ç»„åˆæŸ¥æ‰¾; é€‰å‡ºè¦çˆ¬å–çš„åŒºåŸŸ | è¿”å› list
             node = soup.select('div .book_info')[0]
 
-            first_line_node =  node.find_all('dl')[0] # Ğ¡ËµµÚÒ»ĞĞĞÅÏ¢
-            second_line_node = node.find_all('dl')[1] # Ğ¡ËµµÚ¶şĞĞĞÅÏ¢
-            three_line_node = node.find_all('div')[1] # Ğ¡ËµµÚÈıĞĞĞÅÏ¢
-            # Ğ¡ËµÏêÇé
+            first_line_node =  node.find_all('dl')[0] # å°è¯´ç¬¬ä¸€è¡Œä¿¡æ¯
+            second_line_node = node.find_all('dl')[1] # å°è¯´ç¬¬äºŒè¡Œä¿¡æ¯
+            three_line_node = node.find_all('div')[1] # å°è¯´ç¬¬ä¸‰è¡Œä¿¡æ¯
+            # å°è¯´è¯¦æƒ…
             datas['data'] = {
-                'title': node.h3.a.string, # ÊéÃû
-                'grade': node.find_all('div')[0].span.b.font.string, #ÆÀ·Ö
-                'author': first_line_node.find_all('dd')[0].a.string, # ×÷Õß
-                'type': first_line_node.find_all('dd')[1].a.string, #ÀàĞÍ
-                'word_number': first_line_node.find_all('dd')[2].string, #×ÖÊı
-                'publish': second_line_node.find_all('dd')[0].string, # ³ö°æÉç
-                'popularity': second_line_node.find_all('dd')[1].string, # ÈËÆø
-                'price': second_line_node.find_all('dd')[2].string, # ¼Û¸ñ
-                'collect': three_line_node.find_all('a')[1].find_all('span')[2].string, # ÊÕ²ØÁ¿
-                'recommend': three_line_node.find_all('a')[2].span.string, # ÍÆ¼öÁ¿
-                'praise': three_line_node.find_all('a')[3].span.string # ´óÉÍÁ¿
+                'title': node.h3.a.string, # ä¹¦å
+                'grade': node.find_all('div')[0].span.b.font.string, #è¯„åˆ†
+                'author': first_line_node.find_all('dd')[0].a.string, # ä½œè€…
+                'type': first_line_node.find_all('dd')[1].a.string, #ç±»å‹
+                'word_number': first_line_node.find_all('dd')[2].string, #å­—æ•°
+                'publish': second_line_node.find_all('dd')[0].string, # å‡ºç‰ˆç¤¾
+                'popularity': second_line_node.find_all('dd')[1].string, # äººæ°”
+                'price': second_line_node.find_all('dd')[2].string, # ä»·æ ¼
+                'collect': three_line_node.find_all('a')[1].find_all('span')[2].string, # æ”¶è—é‡
+                'recommend': three_line_node.find_all('a')[2].span.string, # æ¨èé‡
+                'praise': three_line_node.find_all('a')[3].span.string # å¤§èµé‡
             }
-            # Ğ¡Ëµ URL
+            # å°è¯´ URL
             datas['spider_url'] = link
             datas['current_page_length'] = length
-            # °Ñ python ¶ÔÏó±àÂë³É JSON ¸ñÊ½, Ëõ½ø4¸ñ
+            # æŠŠ python å¯¹è±¡ç¼–ç æˆ JSON æ ¼å¼, ç¼©è¿›4æ ¼
             data_json = json.dumps(datas, encoding = "UTF-8", ensure_ascii = False, indent = 4)
             print data_json
 
 if __name__ == '__main__':
     base_url = 'http://dushu.qq.com/store/index/sortkey/1/ps/30/p/'
     qq_read = QqRead(base_url)
-    # ÒÀ´ÎÈ¡³ö 1 - 10, ÅÀÈ¡ 1 - 10 Ò³
+    # ä¾æ¬¡å–å‡º 1 - 10, çˆ¬å– 1 - 10 é¡µ
     for i in range(1, 11):
         qq_read.details(i)
 
 
 """
-  Êä³ö½á¹û£º
-            ÕıÔÚÅÀÈ¡µÄÍøÒ³URLµØÖ·: http://dushu.qq.com/store/index/sortkey/1/ps/30/p/1
-            ±¾Ò³Ãæ¹²ĞèÅÀÈ¡ 30 ¸öURL.
+  è¾“å‡ºç»“æœï¼š
+            æ­£åœ¨çˆ¬å–çš„ç½‘é¡µURLåœ°å€: http://dushu.qq.com/store/index/sortkey/1/ps/30/p/1
+            æœ¬é¡µé¢å…±éœ€çˆ¬å– 30 ä¸ªURL.
             {
                 "spider_url": "http://dushu.qq.com/intro.html?bid=310949",
                 "data": {
                     "popularity": "3003",
                     "grade": "3.6",
-                    "price": "VIPÃâ·Ñ",
-                    "word_number": "25Íò×Ö",
-                    "title": "¼Ö±¦ÓñÁÖ÷ìÓñ±ğ´«",
-                    "author": "¹ùÂåÈÊ",
-                    "publish": "ÖĞ¹ú¿ÆÑ§ÎÄ»¯ÒôÏñ³ö°æÉçÏŞ¹«Ë¾",
+                    "price": "VIPå…è´¹",
+                    "word_number": "25ä¸‡å­—",
+                    "title": "è´¾å®ç‰æ—é»›ç‰åˆ«ä¼ ",
+                    "author": "éƒ­æ´›ä»",
+                    "publish": "ä¸­å›½ç§‘å­¦æ–‡åŒ–éŸ³åƒå‡ºç‰ˆç¤¾é™å…¬å¸",
                     "collect": "3003",
                     "praise": "0",
                     "recommend": "31",
-                    "type": "ÖĞ¹ú¹ÅµäĞ¡Ëµ"
+                    "type": "ä¸­å›½å¤å…¸å°è¯´"
                 },
                 "current_page_length": 30
             }
@@ -112,15 +112,15 @@ if __name__ == '__main__':
                 "data": {
                     "popularity": "52255",
                     "grade": "4.2",
-                    "price": "5.99Ôª",
-                    "word_number": "19Íò×Ö",
-                    "title": "ºó¹¬ÈçÜ²´«3",
-                    "author": "Á÷äò×Ï",
-                    "publish": "ÖĞ¹ú»ªÇÈ³ö°æÉç",
+                    "price": "5.99å…ƒ",
+                    "word_number": "19ä¸‡å­—",
+                    "title": "åå®«å¦‚æ‡¿ä¼ 3",
+                    "author": "æµæ½‹ç´«",
+                    "publish": "ä¸­å›½åä¾¨å‡ºç‰ˆç¤¾",
                     "collect": "52255",
                     "praise": "6",
                     "recommend": "674",
-                    "type": "Çé¸Ğ"
+                    "type": "æƒ…æ„Ÿ"
                 },
                 "current_page_length": 30
             }
