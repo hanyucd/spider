@@ -1,7 +1,5 @@
-## ﻿python爬虫
+## 爬虫
 
-requests结合BeautifulSoup写的爬虫,并以Json格式显示。
+[qqRead_spider.py：](./qqRead_spider.py)  requests 结合 BeautifulSoup 写的爬虫,并以 JSON 格式显示。
 
-> 程序执行：
-
-![爬虫](./image/spider.jpg)
+[paChong_AiCar.java：](./qqRead_spider.py) IO 流结合正则表达式写的 java 爬虫。
